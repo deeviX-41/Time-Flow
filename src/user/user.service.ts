@@ -8,6 +8,7 @@ type userDto = {
   phone: string;
   salary: number;
 };
+
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
