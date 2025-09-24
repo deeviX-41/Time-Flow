@@ -13,7 +13,7 @@ datasource db {
 model User{
     id Int @id @default(autoincrement())
     name String 
-    phone Int @unique
+    phone String @unique
     email String @unique
     salary Int
     appointments Appointment[]
@@ -22,7 +22,7 @@ model User{
 model Customer{
     id Int @id @default(autoincrement())
     name String
-    phone Int @unique
+    phone String @unique
     appointments Appointment[]
   }
 

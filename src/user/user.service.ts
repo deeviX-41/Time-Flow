@@ -2,6 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from '@prisma/client';
 
+type userDto = {
+  name: string;
+  email: string;
+  phone: string;
+  salary: number;
+};
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
@@ -17,12 +23,12 @@ export class UserService {
       },
     });
   }
-  async createUser(data: User): Promise<User> {
+  async createUser(data: userDto): Promise<User> {
     return this.prisma.user.create({
       data,
     });
   }
-  async updateUser(id: number, data: User): Promise<User> {
+  async updateUser(id: number, data: userDto): Promise<User> {
     return this.prisma.user.update({
       where: {
         id,
