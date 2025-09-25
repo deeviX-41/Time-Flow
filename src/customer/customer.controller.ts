@@ -15,27 +15,27 @@ export class CustomerController {
   constructor(private readonly CustomerService: CustomerService) {}
 
   @Get()
-  async getAllUsers() {
+  async getAllCustomer() {
     return this.CustomerService.getAllCustomer();
   }
 
   @Post()
-  async createUser(@Body() data: Customer) {
+  async createCustomer(@Body() data: Customer) {
     return this.CustomerService.createCustomer(data);
   }
 
   @Get(':id')
-  async getUserById(@Param('id') id: string) {
+  async getCustomerById(@Param('id') id: string) {
     return this.CustomerService.getCustomerById(Number(id));
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string) {
+  async deleteCustomer(@Param('id') id: string) {
     return this.CustomerService.deleteCustomer(Number(id));
   }
 
   @Put(':id')
-  async updateUser(@Param('id') id: string, @Body() data: Customer) {
+  async updateCustomer(@Param('id') id: string, @Body() data: Customer) {
     return this.CustomerService.updateCustomer(Number(id), data);
   }
 }
