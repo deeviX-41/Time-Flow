@@ -24,7 +24,7 @@ yargs(hideBin(process.argv))
 
   // Usuarios
   .command(
-    'user <action>',
+    ['user <action>', 'u <action>'],
     'Gestión de usuarios (s=create, l=list, u=update, d=delete)',
     (yargs) => {
       return yargs.positional('action', {
@@ -38,7 +38,7 @@ yargs(hideBin(process.argv))
 
   // Clientes
   .command(
-    'customer <action>',
+    ['customer <action>', 'c <action>'],
     'Gestión de clientes (s=create, l=list, u=update, d=delete)',
     (yargs) => {
       return yargs.positional('action', {
@@ -52,7 +52,7 @@ yargs(hideBin(process.argv))
 
   // Citas
   .command(
-    'appointment <action>',
+    ['appointment <action>', 'a <action>'],
     'Gestión de citas (s=create, l=list, u=update, d=delete)',
     (yargs) => {
       return yargs.positional('action', {
@@ -64,7 +64,54 @@ yargs(hideBin(process.argv))
     (argv) => appointmentCommands(argv.action as string, appointmentService),
   )
 
-  .demandCommand(1, '⚠️ Debes especificar al menos un comando')
-  .help()
+  .demandCommand(1, 'Debes especificar al menos un comando')
+  .help('help')
+  .alias('h', 'help')
+  .epilog(
+    `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           TIME-FLOW CLI - Gestor de Citas
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GUÍA RÁPIDA:
+  Los comandos siguen el patrón: timef <entidad> <acción>
+  
+  Entidades:
+    u  →  usuarios (user)
+    c  →  clientes (customer)  
+    a  →  citas (appointment)
+  
+  Acciones:
+    s  →  crear/guardar (save)
+    l  →  listar (list)
+    u  →  actualizar (update)
+    d  →  eliminar (delete)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ EJEMPLOS CON USUARIOS:
+  timef u s       Crear un nuevo usuario
+  timef u l       Ver todos los usuarios
+  timef u u       Actualizar un usuario existente
+  timef u d       Eliminar un usuario
+
+ EJEMPLOS CON CLIENTES:
+  timef c s       Crear un nuevo cliente
+  timef c l       Ver todos los clientes
+  timef c u       Actualizar un cliente existente
+  timef c d       Eliminar un cliente
+
+ EJEMPLOS CON CITAS:
+  timef a s       Crear una nueva cita
+  timef a l       Ver todas las citas
+  timef a u       Actualizar una cita existente
+  timef a d       Eliminar una cita
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ CONSEJOS:
+  • Puedes usar la forma corta (timef u s) o larga (timef user s)
+  • Los datos se guardan en una base de datos SQLite local
+  • Asegúrate de crear usuarios y clientes antes de crear citas
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ Más información:
+   Visita: https://github.com/deeviX-41/Time-Flow
+`,
+  )
   .strict()
   .parse();

@@ -10,18 +10,18 @@ export async function appointmentCommands(
   switch (action) {
     case 's': {
       const answers = await inquirer.prompt([
-        { type: 'input', name: 'date', message: '📅 Fecha (YYYY-MM-DD):' },
-        { type: 'input', name: 'time', message: '⏰ Hora (HH:MM):' },
+        { type: 'input', name: 'date', message: 'Fecha (YYYY-MM-DD):' },
+        { type: 'input', name: 'time', message: 'Hora (HH:MM):' },
         {
           type: 'number',
           name: 'userId',
-          message: '👤 ID del usuario responsable:',
+          message: 'ID del usuario responsable:',
         },
-        { type: 'number', name: 'customerId', message: '👥 ID del cliente:' },
+        { type: 'number', name: 'customerId', message: 'ID del cliente:' },
         {
           type: 'input',
           name: 'status',
-          message: '📌 Estado (pendiente|confirmada|cancelada):',
+          message: 'Estado (pendiente|confirmada|cancelada):',
           default: 'pendiente',
         },
       ]);
@@ -34,7 +34,7 @@ export async function appointmentCommands(
         status: answers.status,
       } as any);
 
-      console.log(chalk.greenBright('\n✅ Appointment creada:'));
+      console.log(chalk.greenBright('\nAppointment creada:'));
       console.log(appointment);
       break;
     }
@@ -43,7 +43,7 @@ export async function appointmentCommands(
       const apps = await appointmentService.getAllAppointments();
       if (!apps || apps.length === 0) {
         console.log(
-          chalk.yellow('\n⚠️ No hay appointments en la base de datos.\n'),
+          chalk.yellow('\nNo hay appointments en la base de datos.\n'),
         );
         break;
       }
@@ -73,13 +73,13 @@ export async function appointmentCommands(
         {
           type: 'number',
           name: 'id',
-          message: '🆔 ID de la appointment a actualizar:',
+          message: 'ID de la appointment a actualizar:',
         },
       ]);
 
       const existing = await appointmentService.getAppointmentById(id);
       if (!existing) {
-        console.log(chalk.redBright('❌ Appointment no encontrada'));
+        console.log(chalk.redBright('Appointment no encontrada'));
         break;
       }
 
@@ -87,7 +87,7 @@ export async function appointmentCommands(
         {
           type: 'input',
           name: 'date',
-          message: '📅 Fecha (YYYY-MM-DD):',
+          message: 'Fecha (YYYY-MM-DD):',
           default: existing.date
             ? new Date(existing.date).toISOString().slice(0, 10)
             : undefined,
@@ -95,25 +95,25 @@ export async function appointmentCommands(
         {
           type: 'input',
           name: 'time',
-          message: '⏰ Hora (HH:MM):',
+          message: 'Hora (HH:MM):',
           default: existing.time,
         },
         {
           type: 'number',
           name: 'userId',
-          message: '👤 ID usuario:',
+          message: 'ID usuario:',
           default: existing.userId,
         },
         {
           type: 'number',
           name: 'customerId',
-          message: '👥 ID cliente:',
+          message: 'ID cliente:',
           default: existing.customerId,
         },
         {
           type: 'input',
           name: 'status',
-          message: '📌 Estado:',
+          message: 'Estado:',
           default: existing.status ?? 'pendiente',
         },
       ]);
@@ -126,7 +126,7 @@ export async function appointmentCommands(
         status: data.status,
       } as any);
 
-      console.log(chalk.greenBright('\n✏️ Appointment actualizada:'));
+      console.log(chalk.greenBright('\nAppointment actualizada:'));
       console.log(updated);
       break;
     }
@@ -136,7 +136,7 @@ export async function appointmentCommands(
         {
           type: 'number',
           name: 'id',
-          message: '🆔 ID de la appointment a eliminar:',
+          message: 'ID de la appointment a eliminar:',
         },
       ]);
 
@@ -150,16 +150,16 @@ export async function appointmentCommands(
       ]);
 
       if (!confirm) {
-        console.log(chalk.yellow('⛔ Eliminación cancelada'));
+        console.log(chalk.yellow('Eliminación cancelada'));
         break;
       }
 
       await appointmentService.deleteAppointment(id);
-      console.log(chalk.green('🗑️ Appointment eliminada'));
+      console.log(chalk.green('Appointment eliminada'));
       break;
     }
 
     default:
-      console.log('❌ Acción no válida para appointment. Usa s|l|u|d');
+      console.log('Acción no válida para appointment. Usa s|l|u|d');
   }
 }

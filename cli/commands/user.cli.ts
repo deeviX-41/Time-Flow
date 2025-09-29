@@ -12,10 +12,10 @@ export async function userCommands(action: string, userService: UserService) {
         phone: string;
         salary: number;
       }>([
-        { type: 'input', name: 'name', message: '👤 Nombre del usuario:' },
-        { type: 'input', name: 'email', message: '📧 Email del usuario:' },
-        { type: 'input', name: 'phone', message: '📱 Teléfono del usuario:' },
-        { type: 'number', name: 'salary', message: '💰 Salario del usuario:' },
+        { type: 'input', name: 'name', message: 'Nombre del usuario:' },
+        { type: 'input', name: 'email', message: 'Email del usuario:' },
+        { type: 'input', name: 'phone', message: 'Teléfono del usuario:' },
+        { type: 'number', name: 'salary', message: 'Salario del usuario:' },
       ]);
 
       const user = await userService.createUser({
@@ -25,7 +25,7 @@ export async function userCommands(action: string, userService: UserService) {
         salary: answers.salary,
       } as any);
 
-      console.log(chalk.greenBright('\n✅ Usuario creado:'));
+      console.log(chalk.greenBright('\nUsuario creado:'));
       console.log(user);
       break;
     }
@@ -33,20 +33,16 @@ export async function userCommands(action: string, userService: UserService) {
     case 'l': {
       const users = await userService.getAllUsers();
       if (!users || users.length === 0) {
-        console.log(
-          chalk.yellow('\n⚠️ No hay usuarios en la base de datos.\n'),
-        );
+        console.log(chalk.yellow('\nNo hay usuarios en la base de datos.\n'));
         break;
       }
 
       const table = new Table({
-        head: ['ID', 'Nombre', 'Email', 'Teléfono', 'Salario'],
-        colWidths: [6, 20, 30, 18, 12],
+        head: ['ID', 'Nombre', 'Email', 'Teléfono'],
+        colWidths: [6, 25, 30, 20],
       });
 
-      users.forEach((u) =>
-        table.push([u.id, u.name, u.email, u.phone, u.salary]),
-      );
+      users.forEach((u) => table.push([u.id, u.name, u.email, u.phone]));
       console.log('\n' + table.toString() + '\n');
       break;
     }
@@ -56,13 +52,13 @@ export async function userCommands(action: string, userService: UserService) {
         {
           type: 'number',
           name: 'id',
-          message: '🆔 ID del usuario a actualizar:',
+          message: 'ID del usuario a actualizar:',
         },
       ]);
 
       const existing = await userService.getUserById(id);
       if (!existing) {
-        console.log(chalk.redBright('❌ Usuario no encontrado'));
+        console.log(chalk.redBright('Usuario no encontrado'));
         break;
       }
 
@@ -70,32 +66,32 @@ export async function userCommands(action: string, userService: UserService) {
         {
           type: 'input',
           name: 'name',
-          message: '👤 Nombre:',
+          message: 'Nombre:',
           default: existing.name,
         },
         {
           type: 'input',
           name: 'email',
-          message: '📧 Email:',
+          message: 'Email:',
           default: existing.email,
         },
         {
           type: 'input',
           name: 'phone',
-          message: '📱 Teléfono:',
+          message: 'Teléfono:',
           default: existing.phone,
         },
         {
           type: 'number',
           name: 'salary',
-          message: '💰 Salario:',
+          message: 'Salario:',
           default: existing.salary,
         },
       ]);
 
       const updated = await userService.updateUser(id, data as any);
 
-      console.log(chalk.greenBright('\n✏️ Usuario actualizado:'));
+      console.log(chalk.greenBright('\nUsuario actualizado:'));
       console.log(updated);
       break;
     }
@@ -105,7 +101,7 @@ export async function userCommands(action: string, userService: UserService) {
         {
           type: 'number',
           name: 'id',
-          message: '🆔 ID del usuario a eliminar:',
+          message: 'ID del usuario a eliminar:',
         },
       ]);
 
@@ -119,16 +115,16 @@ export async function userCommands(action: string, userService: UserService) {
       ]);
 
       if (!confirm) {
-        console.log(chalk.yellow('⛔ Eliminación cancelada'));
+        console.log(chalk.yellow('Eliminación cancelada'));
         break;
       }
 
       await userService.deleteUser(id);
-      console.log(chalk.green('🗑️ Usuario eliminado'));
+      console.log(chalk.green('Usuario eliminado'));
       break;
     }
 
     default:
-      console.log('❌ Acción no válida para user. Usa s|l|u|d');
+      console.log('Acción no válida para user. Usa s|l|u|d');
   }
 }

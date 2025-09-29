@@ -16,7 +16,7 @@ export async function customerCommands(
 
       const customer = await customerService.createCustomer(answers as any);
 
-      console.log(chalk.greenBright('\n✅ Cliente creado:'));
+      console.log(chalk.greenBright('\nCliente creado:'));
       console.log(customer);
       break;
     }
@@ -24,9 +24,7 @@ export async function customerCommands(
     case 'l': {
       const customers = await customerService.getAllCustomer();
       if (!customers || customers.length === 0) {
-        console.log(
-          chalk.yellow('\n⚠️ No hay clientes en la base de datos.\n'),
-        );
+        console.log(chalk.yellow('\nNo hay clientes en la base de datos.\n'));
         break;
       }
 
@@ -45,13 +43,13 @@ export async function customerCommands(
         {
           type: 'number',
           name: 'id',
-          message: '🆔 ID del cliente a actualizar:',
+          message: 'ID del cliente a actualizar:',
         },
       ]);
 
       const existing = await customerService.getCustomerById(id);
       if (!existing) {
-        console.log(chalk.redBright('❌ Cliente no encontrado'));
+        console.log(chalk.redBright('Cliente no encontrado'));
         break;
       }
 
@@ -59,20 +57,20 @@ export async function customerCommands(
         {
           type: 'input',
           name: 'name',
-          message: '👤 Nombre:',
+          message: 'Nombre:',
           default: existing.name,
         },
         {
           type: 'input',
           name: 'phone',
-          message: '📱 Teléfono:',
+          message: 'Teléfono:',
           default: existing.phone,
         },
       ]);
 
       const updated = await customerService.updateCustomer(id, data as any);
 
-      console.log(chalk.greenBright('\n✏️ Cliente actualizado:'));
+      console.log(chalk.greenBright('\nCliente actualizado:'));
       console.log(updated);
       break;
     }
@@ -82,7 +80,7 @@ export async function customerCommands(
         {
           type: 'number',
           name: 'id',
-          message: '🆔 ID del cliente a eliminar:',
+          message: 'ID del cliente a eliminar:',
         },
       ]);
 
@@ -96,16 +94,16 @@ export async function customerCommands(
       ]);
 
       if (!confirm) {
-        console.log(chalk.yellow('⛔ Eliminación cancelada'));
+        console.log(chalk.yellow('Eliminación cancelada'));
         break;
       }
 
       await customerService.deleteCustomer(id);
-      console.log(chalk.green('🗑️ Cliente eliminado'));
+      console.log(chalk.green('Cliente eliminado'));
       break;
     }
 
     default:
-      console.log('❌ Acción no válida para customer. Usa s|l|u|d');
+      console.log('Acción no válida para customer. Usa s|l|u|d');
   }
 }
