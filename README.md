@@ -1,98 +1,155 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Time-Flow CLI
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Sistema de gestion de citas.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Características
 
-## Description
+- Gestión de Usuarios (empleados y profesionales)
+- Gestión de Clientes
+- Gestión de Citas
+- Base de datos SQLite local
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Instalación
 
-## Project setup
+### Prerrequisitos
+
+- Node.js (v16 o superior)
+- npm (incluido con Node.js)
+
+### Pasos
+
+1. **Clonar el repositorio**
 
 ```bash
-$ npm install
+git clone https://github.com/deeviX-41/Time-Flow.git
+cd Time-Flow
 ```
 
-## Compile and run the project
+2. **Instalar dependencias**
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+3. **Configurar variables de entorno**
+
+Crear un archivo `.env` en la raíz del proyecto y depues pega el siguiente contenido:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+DATABASE_URL="file:./dev.db"
+PORT=3000
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+4. **Configurar la base de datos**
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npx prisma generate
+npx prisma migrate deploy
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Uso
 
-## Resources
+### Sintaxis general
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+npm run cli <entidad> <acción>
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Ver ayuda
 
-## Support
+```bash
+npm run cli help
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Instalación Global (Opcional)
 
-## Stay in touch
+Si deseas usar el comando `timef` directamente sin `npm run`:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Compilar el CLI
+npm run build:cli
 
-## License
+# Instalar globalmente
+npm link
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Usar directamente
+timef u s
+timef c l
+timef a l
+```
+
+Para desinstalar:
+
+```bash
+npm unlink -g timef
+```
+
+## Flujo de Trabajo Recomendado
+
+### Primera vez usando el sistema
+
+1. Crear usuarios (profesionales que atenderán)
+2. Crear clientes
+3. Crear citas (requiere usuarios y clientes existentes)
+
+### Ejemplo completo
+
+```bash
+# Paso 1: Crear un usuario
+npm run cli u s
+# > Nombre: Juan Pérez
+# > Email: juan@ejemplo.com
+# > Teléfono: 12345678
+# > Salario: 3000
+
+# Paso 2: Crear un cliente
+npm run cli c s
+# > Nombre: María López
+# > Teléfono: 87654321
+
+# Paso 3: Ver IDs de usuarios y clientes
+npm run cli u l
+npm run cli c l
+
+# Paso 4: Crear una cita
+npm run cli a s
+# > Fecha: 2025-01-15
+# > Hora: 14:30
+# > ID del usuario: 1
+# > ID del cliente: 1
+# > Estado: Pendiente
+```
+
+**Errores comunes:**
+
+### Error: "Cannot find module"
+
+````bash
+npm install
+npx prisma generate
+
+### Error: "Base de datos no encontrada"
+
+```bash
+npx prisma generate
+````
+
+````
+
+### Resetear la base de datos
+
+```bash
+rm prisma/dev.db
+npx prisma migrate deploy
+````
+
+## Tecnologías
+
+- **NestJS** - Framework backend
+- **Prisma** - ORM para base de datos
+- **SQLite** - Base de datos local
+- **TypeScript** - Lenguaje tipado
+- **Yargs** - Parser de comandos
+- **Inquirer** - Prompts interactivos
+- **Chalk** - Colores en terminal
+- **CLI-table3** - Tablas en terminal
