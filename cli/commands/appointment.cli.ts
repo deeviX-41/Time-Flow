@@ -3,6 +3,17 @@ import chalk from 'chalk';
 import Table from 'cli-table3';
 import { AppointmentService } from '../../src/appointment/appointment.service';
 
+const STATUS_MAP = {
+  '1': 'pendiente',
+  '2': 'completada',
+  '3': 'cancelada',
+};
+const STATUS_DISPLAY = {
+  '1': 'Pendiente',
+  '2': 'Completada',
+  '3': 'Cancelada',
+};
+
 export async function appointmentCommands(
   action: string,
   appointmentService: AppointmentService,
@@ -20,9 +31,14 @@ export async function appointmentCommands(
         { type: 'number', name: 'customerId', message: 'ID del cliente:' },
         {
           type: 'input',
-          name: 'status',
-          message: 'Estado (pendiente|confirmada|cancelada):',
-          default: 'pendiente',
+          name: 'statusOption',
+          message: 'Estado de la cita:',
+          choices: [
+            { name: STATUS_DISPLAY['1'], value: '1' },
+            { name: STATUS_DISPLAY['2'], value: '2' },
+            { name: STATUS_DISPLAY['3'], value: '3' },
+          ],
+          default: '1',
         },
       ]);
 
@@ -31,7 +47,7 @@ export async function appointmentCommands(
         time: answers.time,
         userId: answers.userId,
         customerId: answers.customerId,
-        status: answers.status,
+        status: STATUS_MAP[answers.statusOption as keyof typeof STATUS_MAP],
       } as any);
 
       console.log(chalk.greenBright('\nAppointment creada:'));
@@ -49,21 +65,26 @@ export async function appointmentCommands(
       }
 
       const table = new Table({
-        head: ['ID', 'Fecha', 'Hora', 'Estado', 'User', 'Customer'],
+        head: ['ID', 'Fecha', 'Hora', 'Estado', 'Usuario', 'Cliente'],
         colWidths: [6, 14, 8, 16, 20, 20],
       });
 
-      apps.forEach((a: any) =>
+      apps.forEach((a: any) => {
+        // Formatear el status con emoji
+        let statusDisplay = a.status;
+        if (a.status === 'pendiente') statusDisplay = 'Pendiente';
+        if (a.status === 'completada') statusDisplay = 'Completada';
+        if (a.status === 'cancelada') statusDisplay = 'Cancelada';
+
         table.push([
           a.id,
           a.date ? new Date(a.date).toLocaleDateString() : a.date,
           a.time,
-          a.status,
+          statusDisplay,
           a.user ? a.user.name : a.userId,
           a.customer ? a.customer.name : a.customerId,
-        ]),
-      );
-
+        ]);
+      });
       console.log('\n' + table.toString() + '\n');
       break;
     }
@@ -79,9 +100,13 @@ export async function appointmentCommands(
 
       const existing = await appointmentService.getAppointmentById(id);
       if (!existing) {
-        console.log(chalk.redBright('Appointment no encontrada'));
+        console.log(chalk.redBright('Cita no encontrada'));
         break;
       }
+
+      let currentStatusOption = '1';
+      if (existing.status === 'completada') currentStatusOption = '2';
+      if (existing.status === 'cancelada') currentStatusOption = '3';
 
       const data = await inquirer.prompt([
         {
@@ -111,10 +136,15 @@ export async function appointmentCommands(
           default: existing.customerId,
         },
         {
-          type: 'input',
-          name: 'status',
-          message: 'Estado:',
-          default: existing.status ?? 'pendiente',
+          type: 'list',
+          name: 'statusOption',
+          message: 'Estado de la cita:',
+          choices: [
+            { name: STATUS_DISPLAY['1'], value: '1' },
+            { name: STATUS_DISPLAY['2'], value: '2' },
+            { name: STATUS_DISPLAY['3'], value: '3' },
+          ],
+          default: currentStatusOption,
         },
       ]);
 
@@ -123,7 +153,7 @@ export async function appointmentCommands(
         time: data.time,
         userId: data.userId,
         customerId: data.customerId,
-        status: data.status,
+        status: STATUS_MAP[data.statusOption as keyof typeof STATUS_MAP],
       } as any);
 
       console.log(chalk.greenBright('\nAppointment actualizada:'));

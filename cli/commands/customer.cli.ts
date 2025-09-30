@@ -10,8 +10,8 @@ export async function customerCommands(
   switch (action) {
     case 's': {
       const answers = await inquirer.prompt<{ name: string; phone: string }>([
-        { type: 'input', name: 'name', message: '👤 Nombre del cliente:' },
-        { type: 'input', name: 'phone', message: '📱 Teléfono del cliente:' },
+        { type: 'input', name: 'name', message: 'Nombre del cliente:' },
+        { type: 'input', name: 'phone', message: 'Teléfono del cliente:' },
       ]);
 
       const customer = await customerService.createCustomer(answers as any);
