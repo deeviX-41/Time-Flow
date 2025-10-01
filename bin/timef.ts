@@ -77,7 +77,7 @@ yargs(hideBin(process.argv))
   
   Entidades:
     u  →  usuarios (user)
-    c  →  clientes (customer)  
+    c  →  clientes (customer)
     a  →  citas (appointment)
   
   Acciones:

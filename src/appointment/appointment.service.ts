@@ -8,6 +8,7 @@ export class AppointmentService {
 
   async getAllAppointments(): Promise<Appointment[]> {
     return this.prisma.appointment.findMany({
+      orderBy: [{ date: 'asc' }, { time: 'asc' }],
       include: { user: true, customer: true },
     });
   }

@@ -32,7 +32,8 @@ export async function appointmentCommands(
         {
           type: 'input',
           name: 'statusOption',
-          message: 'Estado de la cita:',
+          message:
+            'Estado de la cita (1. Pendiente | 2.Completada | 3.Cancelada):',
           choices: [
             { name: STATUS_DISPLAY['1'], value: '1' },
             { name: STATUS_DISPLAY['2'], value: '2' },
@@ -70,7 +71,6 @@ export async function appointmentCommands(
       });
 
       apps.forEach((a: any) => {
-        // Formatear el status con emoji
         let statusDisplay = a.status;
         if (a.status === 'pendiente') statusDisplay = 'Pendiente';
         if (a.status === 'completada') statusDisplay = 'Completada';
