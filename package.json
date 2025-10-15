@@ -17,7 +17,8 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",
     "cli": "ts-node -r tsconfig-paths/register ./bin/timef.ts",
-    "cli:dev": "ts-node -r tsconfig-paths/register ./bin/timef.ts"
+    "cli:dev": "ts-node -r tsconfig-paths/register ./bin/timef.ts",
+    "tui": "ts-node -r tsconfig-paths/register ./tui/index.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -25,6 +26,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@prisma/client": "^6.16.2",
     "axios": "^1.12.2",
+    "blessed": "^0.1.81",
     "chalk": "^5.6.2",
     "cli-table3": "^0.6.5",
     "dotenv": "^16.4.5",
@@ -36,6 +38,7 @@
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
+    "@types/blessed": "^0.1.25",
     "@types/express": "^5.0.0",
     "@types/inquirer": "^9.0.9",
     "@types/node": "^22.10.7",

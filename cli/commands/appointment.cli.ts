@@ -66,11 +66,10 @@ export async function appointmentCommands(
 
       const table = new Table({
         head: ['ID', 'Fecha', 'Hora', 'Estado', 'Usuario', 'Cliente'],
-        colWidths: [6, 14, 8, 16, 20, 20],
+        colWidths: [6, 30, 8, 16, 20, 20],
       });
 
       apps.forEach((a: any) => {
-        // Formatear el status con emoji
         let statusDisplay = a.status;
         if (a.status === 'pendiente') statusDisplay = 'Pendiente';
         if (a.status === 'completada') statusDisplay = 'Completada';
@@ -78,7 +77,7 @@ export async function appointmentCommands(
 
         table.push([
           a.id,
-          a.date ? new Date(a.date).toLocaleDateString() : a.date,
+          a.date ? new Date(a.date).toDateString() : a.date,
           a.time,
           statusDisplay,
           a.user ? a.user.name : a.userId,
