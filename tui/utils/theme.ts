@@ -37,14 +37,12 @@ export const STYLES = {
   // Estilos para el header/título principal
   header: {
     fg: COLORS.text,
-    bg: COLORS.secondary,
     bold: true,
   },
 
   // Estilos para el footer
   footer: {
     fg: COLORS.text,
-    bg: COLORS.secondary,
   },
 
   // Estilos para cajas/contenedores
